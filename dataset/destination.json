@@ -1,0 +1,19 @@
+{
+	"name": "destination",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "azureblobstorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "adfdemo"
+			}
+		},
+		"schema": {}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

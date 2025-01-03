@@ -1,0 +1,39 @@
+{
+	"name": "source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "azureblobstorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "categories.json",
+				"folderPath": "input",
+				"container": "adfdemo"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"_id": {
+					"type": "object",
+					"properties": {
+						"$oid": {
+							"type": "string"
+						}
+					}
+				},
+				"name": {
+					"type": "string"
+				},
+				"slug": {
+					"type": "string"
+				}
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

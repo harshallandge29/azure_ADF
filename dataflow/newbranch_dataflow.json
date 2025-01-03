@@ -1,0 +1,97 @@
+{
+	"name": "newbranch_dataflow",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "employee_s",
+						"type": "DatasetReference"
+					},
+					"name": "emp"
+				},
+				{
+					"dataset": {
+						"referenceName": "department1",
+						"type": "DatasetReference"
+					},
+					"name": "dept"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "dataflowfolder",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				},
+				{
+					"dataset": {
+						"referenceName": "dataflowfolder",
+						"type": "DatasetReference"
+					},
+					"name": "sink2"
+				}
+			],
+			"transformations": [
+				{
+					"name": "aggregate"
+				},
+				{
+					"name": "empondept"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          empid as string,",
+				"          name as string,",
+				"          country as string,",
+				"          department as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> emp",
+				"source(output(",
+				"          depid as string,",
+				"          depname as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> dept",
+				"emp aggregate(groupBy(department),",
+				"     empid = count(empid)) ~> aggregate",
+				"emp, dept join(department == depid,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> empondept",
+				"empondept sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['newbranch_join_dataflow.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          empid,",
+				"          name,",
+				"          country,",
+				"          department,",
+				"          depid,",
+				"          depname",
+				"     ),",
+				"     partitionBy('hash', 1)) ~> sink1",
+				"aggregate sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['newbranch_aggregate_branch.csv'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          depid = department,",
+				"          empid",
+				"     ),",
+				"     partitionBy('hash', 1)) ~> sink2"
+			]
+		}
+	}
+}

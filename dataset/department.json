@@ -1,0 +1,38 @@
+{
+	"name": "department",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "azureblobstorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "department.txt",
+				"folderPath": "department",
+				"container": "newadf"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "depid",
+				"type": "String"
+			},
+			{
+				"name": "floor",
+				"type": "String"
+			},
+			{
+				"name": "job",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
