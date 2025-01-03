@@ -1,0 +1,21 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "ADFDEMOHarshal292"
+		},
+		"azureblobstorage_connectionString": {
+			"value": ""
+		},
+		"shared-selfhosted_properties_typeProperties_linkedInfo_resourceId": {
+			"value": "/subscriptions/8dd7bbbb-89f7-46fd-8068-fbcc90bbfa2c/resourcegroups/TestEnvironment/providers/Microsoft.DataFactory/factories/ADFDEMOHarshal29/integrationruntimes/selfhosted"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
